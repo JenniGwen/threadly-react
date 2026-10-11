@@ -1,16 +1,40 @@
-# React + Vite
+# Threadly — belajar React + Laravel (ureeka)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Twitter clone sederhana untuk materi kelas.
 
-Currently, two official plugins are available:
+```
+threadly-react/
+├── web/        React + Vite (frontend)
+├── api/        Laravel (backend REST API)
+├── _solution/  kunci jawaban latihan React
+└── SESI-*.md   catatan materi per sesi
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Jalankan
 
-## React Compiler
+Backend (terminal 1):
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd api
+composer install
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite
+php artisan migrate --seed
+php artisan serve          # http://127.0.0.1:8000
+```
 
-## Expanding the ESLint configuration
+Frontend (terminal 2):
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd web
+npm install
+npm run dev                # http://localhost:5173, /api di-proxy ke Laravel
+```
+
+Login: `calista` / `123456`
+
+## Materi
+
+- [Sesi 2 — Hooks](SESI-2-HOOKS.md)
+- Sesi 5 — Database & Migration, Model, endpoint `compact()`
