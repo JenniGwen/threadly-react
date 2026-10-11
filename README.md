@@ -38,3 +38,4 @@ Login: `calista` / `123456`
 
 - [Sesi 2 — Hooks](SESI-2-HOOKS.md)
 - Sesi 5 — Database & Migration, Model, endpoint `compact()`
+- [Sesi 6 — Middleware & Validation](SESI-6-MIDDLEWARE-VALIDATION.md)

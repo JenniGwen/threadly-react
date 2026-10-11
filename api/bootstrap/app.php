@@ -13,7 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Nama pendek supaya di routes/api.php cukup tulis ->middleware('auth.token')
+        $middleware->alias([
+            'auth.token' => \App\Http\Middleware\AuthenticateApiToken::class,
+        ]);
+
+        // Jalan untuk SEMUA route di routes/api.php
+        $middleware->api(append: [
+            \App\Http\Middleware\LogApiRequest::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

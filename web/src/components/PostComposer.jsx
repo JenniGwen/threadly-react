@@ -7,6 +7,7 @@ const DRAFT_KEY = "threadly-draft"; // nama "laci" penyimpanan di localStorage
 
 function PostComposer({ currentUser, onNewPost }) {
     const [content, setContent] = useState("");
+    const [error, setError] = useState(""); // pesan validasi dari backend (Sesi 6)
     const isOver = content.length > MAX_CHARS;
 
     // 👉 TODO (Sesi 2 - useRef): buat "pointer" ke elemen textarea.
@@ -22,10 +23,16 @@ function PostComposer({ currentUser, onNewPost }) {
     //    BONUS: jadikan draft yang tersimpan sebagai nilai AWAL useState di atas:
     //      useState(() => localStorage.getItem(DRAFT_KEY) || "")
 
-    function handlePost() {
+    async function handlePost() {
         const trimmed = content.trim();
         if (!trimmed || trimmed.length > MAX_CHARS) return;
-        onNewPost(trimmed);
+        // Backend memvalidasi ulang (StorePostRequest). Kalau ditolak, tampilkan pesannya.
+        const err = await onNewPost(trimmed);
+        if (err) {
+            setError(err);
+            return;
+        }
+        setError("");
         setContent("");
         // 👉 TODO (Sesi 2): setelah jadi post, hapus draft:
         
@@ -44,6 +51,8 @@ function PostComposer({ currentUser, onNewPost }) {
             value={content}
             onChange={(e) => setContent(e.target.value)}
         />
+
+        {error && <p className="composer-error">{error}</p>}
 
         <div className="composer-footer">
             <span className={`character-count ${isOver ? "over-limit" : ""}`}>
